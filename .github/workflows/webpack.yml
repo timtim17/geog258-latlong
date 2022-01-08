@@ -61,4 +61,4 @@ jobs:
           USERNAME: ${{ secrets.FTP_USERNAME }}
           RSYNC_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
-          rsync -av --port 22 ./ $USERNAME@vergil.u.washington.edu:student_html/geog258/latlong
+          rsync -e "ssh -o StrictHostKeyChecking=no" -av --port 22 ./ $USERNAME@vergil.u.washington.edu:student_html/geog258/latlong
