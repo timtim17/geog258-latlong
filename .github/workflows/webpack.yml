@@ -57,10 +57,10 @@ jobs:
         with:
           name: dist
       
-      - name: Deploy to veril over SFTP
+      - run: sudo apt install sshpass
+      
+      - name: Deploy to vergil over SFTP
         env:
           USERNAME: ${{ secrets.FTP_USERNAME }}
           PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          sudo apt install sshpass
-          sshpass -p "${PASSWORD}" rsync -e "ssh -o StrictHostKeyChecking=no -l ${USERNAME} -p 22" -avP --port 22 ./ ${USERNAME}@vergil.u.washington.edu:student_html/geog258/latlong
+        run: sshpass -p "${PASSWORD}" rsync -e "ssh -o StrictHostKeyChecking=no -l ${USERNAME} -p 22" -avP --port 22 ./ ${USERNAME}@vergil.u.washington.edu:student_html/geog258/latlong
