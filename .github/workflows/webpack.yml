@@ -48,7 +48,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .
 
-  deploy-virgil:
+  deploy-vergil:
     needs: build
     runs-on: ubuntu-latest
     steps:
