@@ -1,8 +1,7 @@
-name: NodeJS with Webpack
+name: Verify build
 
 on:
   push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -27,40 +26,3 @@ jobs:
       run: |
         npm install
         npm run build
-    
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: dist
-        path: dist
-
-  deploy-ghpages:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download built artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: dist
-      
-      - uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
-
-  deploy-vergil:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download built artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: dist
-      
-      - run: sudo apt install sshpass
-      
-      - name: Deploy to vergil over SFTP
-        env:
-          USERNAME: ${{ secrets.FTP_USERNAME }}
-          PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        run: sshpass -p "${PASSWORD}" rsync -e "ssh -o StrictHostKeyChecking=no -l ${USERNAME} -p 22" -avP --port 22 ./ ${USERNAME}@vergil.u.washington.edu:student_html/geog258/latlong
