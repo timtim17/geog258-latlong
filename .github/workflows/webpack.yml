@@ -47,3 +47,20 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .
+
+  deploy-virgil:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download built artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+      
+      - uses: SamKirkland/FTP-Deploy-Action@4.2.0
+        with:
+          server: vergil.u.washington.edu
+          port: 22
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: public_html/geog258/latlong/
