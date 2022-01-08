@@ -62,4 +62,4 @@ jobs:
           PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
           sudo apt install sshpass
-          sshpass -p '${PASSWORD}' rsync -e "ssh -o StrictHostKeyChecking=no -l ${USERNAME} -p 22" -va --port 22 ./ ${USERNAME}@vergil.u.washington.edu:student_html/geog258/latlong
+          sshpass -p '${PASSWORD}' rsync -e "ssh -vvo StrictHostKeyChecking=no -l ${USERNAME} -p 22" -vvaP --port 22 ./ ${USERNAME}@vergil.u.washington.edu:student_html/geog258/latlong
