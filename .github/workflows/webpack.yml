@@ -33,6 +33,7 @@ jobs:
         name: dist
         path: dist
   deploy-ghpages:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Download built artifact
